@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/stock")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 @PreAuthorize("hasRole('ACCOUNTANT') or hasRole('ADMIN')")
 public class StockController {
 

@@ -17,7 +17,7 @@ interface CaravanMapProps {
 const CaravanMap: React.FC<CaravanMapProps> = ({ caravans = [] }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const [mapboxToken, setMapboxToken] = useState<string>("");
+  const [mapboxToken, setMapboxToken] = useState<string>("pk.eyJ1IjoibWFyd2E0IiwiYSI6ImNtYmdxNzlnaTAxZWwyaXF0czQ1dnU4cHoifQ.AgdaIB4WpdGq4s_tMfRZXA");
   const [selectedCaravan, setSelectedCaravan] = useState<Caravan | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);

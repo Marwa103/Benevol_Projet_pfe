@@ -39,4 +39,15 @@ public class UserService {
         dto.setDateModification(user.getDateModification());
         return dto;
     }
+    
+    public User editUserProfile(UserDto userDto) {
+    	System.out.println(userDto);
+        User user = userRepository.findByEmail(userDto.getEmail()).get();
+        if(user != null) {
+        	user.setName(userDto.getNom());
+        	user.setEmail(userDto.getEmail());
+        	userRepository.save(user);
+        }
+        return user;
+    } 
 }

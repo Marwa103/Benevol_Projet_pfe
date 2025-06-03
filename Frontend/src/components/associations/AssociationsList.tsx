@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AssociationCard from './AssociationCard';
 import { Association } from '@/utils/types';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import associationService from '@/services/associationService';
 
 // Sample data for demonstration
 const mockAssociations: Association[] = [
@@ -105,6 +106,17 @@ const AssociationsList = () => {
   });
   
   const cities = Array.from(new Set(mockAssociations.map(a => a.city)));
+
+  const [ associations, setAssociations ] = useState({})
+  const getData = async (): Promise<void> => {
+    await associationService.getAllAssociations()
+    .then(response => {
+      setAssociations(response);
+    })
+  }
+  useEffect(() => {
+    getData()
+  },[]);
   
   return (
     <div className="space-y-6">
@@ -142,19 +154,10 @@ const AssociationsList = () => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredAssociations.map(association => (
+        {Object.values(associations).map((association: any) => (
           <AssociationCard key={association.id} association={association} />
         ))}
       </div>
-      
-      {filteredAssociations.length === 0 && (
-        <div className="text-center py-12">
-          <h3 className="text-lg font-medium">Aucune association trouvée</h3>
-          <p className="text-muted-foreground">
-            Essayez d'ajuster vos critères de recherche
-          </p>
-        </div>
-      )}
     </div>
   );
 };

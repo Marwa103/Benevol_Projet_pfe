@@ -2,7 +2,6 @@
 package com.benevol.controller;
 
 import com.benevol.dto.caravane.CaravaneDto;
-import com.benevol.dto.caravane.CaravaneStatsDto;
 import com.benevol.dto.caravane.CreateCaravaneDto;
 import com.benevol.service.CaravaneService;
 import jakarta.validation.Valid;
@@ -15,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/caravane")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class CaravaneController {
 
     @Autowired

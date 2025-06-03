@@ -8,6 +8,9 @@ import { Label } from '@/components/ui/label';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { toast } from '@/hooks/use-toast';
+import { CreateDonDto, DonDto } from '@/services/donationService';
+import { API_ENDPOINTS } from '@/utils/apiConfig';
+import apiService from '@/services/apiService';
 
 const Donation = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -22,6 +25,16 @@ const Donation = () => {
   });
 
   const onSubmit = (data: any) => {
+    console.log(data);
+
+    const donationData: CreateDonDto = {
+      nomDonateur: data.name,
+      montant: data.amount,
+      typeDon: 'MONETARY'
+    };
+
+    apiService.post<DonDto>(API_ENDPOINTS.DON.CREATE, donationData);
+
     setIsProcessing(true);
     // Simulons un traitement de paiement
     setTimeout(() => {

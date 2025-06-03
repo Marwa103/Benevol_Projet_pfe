@@ -13,6 +13,7 @@ export const API_ENDPOINTS = {
   USER: {
     PROFILE: `${API_BASE_URL}/user/profile`,
     ME: `${API_BASE_URL}/user/me`,
+    EDIT: `${API_BASE_URL}/user/edit`,
   },
   // Caravanes endpoints
   CARAVANE: {
@@ -24,8 +25,7 @@ export const API_ENDPOINTS = {
     DELETE: (id: string) => `${API_BASE_URL}/caravane/${id}`,
     PARTICIPATE: (id: string) => `${API_BASE_URL}/caravane/${id}/participate`,
     PARTICIPATION_REQUESTS: `${API_BASE_URL}/caravane/participations/pending`,
-STATS: `${API_BASE_URL}/caravane/stats`,
-
+    STATS: `${API_BASE_URL}/caravane/stats`,
   },
   // Evenement endpoints
   EVENEMENT: {

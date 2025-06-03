@@ -26,7 +26,8 @@ const VisitorDonationHistory = () => {
 
   // Calcul du total des dons
   const totalDonated = donations.reduce((sum, donation) => {
-    return sum + (Number(donation.montant) || 0);
+    console.log(donations);
+    return sum + (Number(donation.amount) || 0);
   }, 0);
   
   return (
@@ -54,7 +55,7 @@ const VisitorDonationHistory = () => {
                   className="border-l-4 border-benevol-400 pl-4 py-2"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="font-medium">{donation.montant} MAD</span>
+                    <span className="font-medium">{donation.amount} MAD</span>
                     <span className="text-sm text-muted-foreground">
                       {donation.dateCreation}
                     </span>

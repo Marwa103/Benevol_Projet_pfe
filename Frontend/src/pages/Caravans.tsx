@@ -1,7 +1,6 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
-import { caravans } from '@/components/caravans/types';
 import { 
   Table, 
   TableBody, 
@@ -26,6 +25,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import caravaneService from '@/services/caravaneService';
+import { formatDate } from '@/utils/dateFormat';
+
 
 const Caravans = () => {
   const { isAuthenticated } = useAuth();
@@ -48,6 +50,17 @@ const Caravans = () => {
     });
   };
 
+  const [ caravanes, setCaravanes ] = useState({})
+  const getData = async (): Promise<void> => {
+    await caravaneService.getAllCaravanes()
+    .then(response => {
+      setCaravanes(response)
+    })
+  }
+  useEffect(() => {
+    getData()
+  },[]);
+
   return (
     <MainLayout>
       <div className="container mx-auto py-8 px-4">
@@ -65,7 +78,7 @@ const Caravans = () => {
               <CardTitle>Carte des caravanes</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="h-[400px]">
+              <div className="h-[500px]">
                 <CaravanMap />
               </div>
             </CardContent>
@@ -83,42 +96,29 @@ const Caravans = () => {
                     <TableHead>Nom</TableHead>
                     <TableHead>Lieu</TableHead>
                     <TableHead>Date</TableHead>
-                    <TableHead>Services</TableHead>
                     <TableHead>Statut</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {caravans.map((caravan) => (
+                  {Object.values(caravanes).map((caravan: any) => (
                     <TableRow key={caravan.id}>
-                      <TableCell className="font-medium">{caravan.name}</TableCell>
+                      <TableCell className="font-medium">{caravan.titre}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
                           <MapPin className="h-3 w-3 text-muted-foreground" />
-                          {caravan.location}
+                          {caravan.adresse}
                         </div>
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3 text-muted-foreground" />
-                          {caravan.date}
+                          {formatDate(caravan.dateCreation)}
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div className="flex flex-wrap gap-1">
-                          {caravan.services.slice(0, 2).map((service, i) => (
-                            <Badge key={i} variant="secondary" className="bg-benevol-50 text-benevol-700">
-                              {service}
-                            </Badge>
-                          ))}
-                          {caravan.services.length > 2 && (
-                            <Badge variant="outline">+{caravan.services.length - 2}</Badge>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={caravan.status === 'active' ? "default" : "outline"}>
-                          {caravan.status === 'active' ? 'En cours' : 'Planifiée'}
+                        <Badge variant={caravan.statut === 'ACTIVE' ? "default" : "outline"}>
+                          {caravan.statut === 'ACTIVE' ? 'En cours' : 'Planifiée'}
                         </Badge>
                       </TableCell>
                       <TableCell>

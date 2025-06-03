@@ -45,7 +45,7 @@ const AdminDashboardStats = ({ statistics, isLoading }: AdminDashboardStatsProps
       </div>
 
       {/* Recent Activities */}
-      <AdminRecentActivities />
+      {/* <AdminRecentActivities /> */}
     </div>
   );
 };

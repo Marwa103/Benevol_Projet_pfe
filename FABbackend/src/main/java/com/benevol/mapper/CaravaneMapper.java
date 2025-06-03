@@ -24,7 +24,7 @@ public class CaravaneMapper {
         dto.setDateFin(caravane.getDateFin());
         dto.setOrganisateur(caravane.getOrganisateur());
         dto.setStatut(caravane.getStatut());
-        dto.setServicesOfferts(caravane.getServicesOfferts());
+//        dto.setServicesOfferts(caravane.getServicesOfferts());
         dto.setNombreParticipants(caravane.getParticipations().size());
         dto.setDateCreation(caravane.getDateCreation());
         dto.setDateModification(caravane.getDateModification());
@@ -44,7 +44,7 @@ public class CaravaneMapper {
         caravane.setDateDebut(createDto.getDateDebut());
         caravane.setDateFin(createDto.getDateFin());
         caravane.setOrganisateur(createDto.getOrganisateur());
-        caravane.setServicesOfferts(createDto.getServicesOfferts());
+//        caravane.setServicesOfferts(createDto.getServicesOfferts());
         return caravane;
     }
 
@@ -58,7 +58,7 @@ public class CaravaneMapper {
             caravane.setDateDebut(updateDto.getDateDebut());
             caravane.setDateFin(updateDto.getDateFin());
             caravane.setOrganisateur(updateDto.getOrganisateur());
-            caravane.setServicesOfferts(updateDto.getServicesOfferts());
+//            caravane.setServicesOfferts(updateDto.getServicesOfferts());
         }
     }
 }

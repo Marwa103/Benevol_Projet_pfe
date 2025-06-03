@@ -32,7 +32,7 @@ export interface CreateCaravaneDto {
 }
 
 class CaravaneService {
-  async getAllCaravanes(): Promise<CaravaneDto[]> {
+  async getAllCaravanes(): Promise<any[]> {
     try {
       return await apiService.get<CaravaneDto[]>(API_ENDPOINTS.CARAVANE.ALL);
     } catch (error) {

@@ -54,10 +54,10 @@ public class Caravane {
     @Column(nullable = false)
     private StatutCaravane statut = StatutCaravane.PLANNED;
 
-    @ElementCollection
-    @CollectionTable(name = "caravane_services", joinColumns = @JoinColumn(name = "caravane_id"))
-    @Column(name = "service")
-    private List<String> servicesOfferts = new ArrayList<>();
+//    @ElementCollection
+//    @CollectionTable(name = "caravane_services", joinColumns = @JoinColumn(name = "caravane_id"))
+//    @Column(name = "service", nullable = true)
+//    private List<String> servicesOfferts = new ArrayList<>();
 
     @OneToMany(mappedBy = "caravane", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ParticipationCaravane> participations = new ArrayList<>();
@@ -126,8 +126,8 @@ public class Caravane {
     public StatutCaravane getStatut() { return statut; }
     public void setStatut(StatutCaravane statut) { this.statut = statut; }
 
-    public List<String> getServicesOfferts() { return servicesOfferts; }
-    public void setServicesOfferts(List<String> servicesOfferts) { this.servicesOfferts = servicesOfferts; }
+//    public List<String> getServicesOfferts() { return servicesOfferts; }
+//    public void setServicesOfferts(List<String> servicesOfferts) { this.servicesOfferts = servicesOfferts; }
 
     public List<ParticipationCaravane> getParticipations() { return participations; }
     public void setParticipations(List<ParticipationCaravane> participations) { this.participations = participations; }

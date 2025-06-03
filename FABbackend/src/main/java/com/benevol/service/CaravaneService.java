@@ -1,29 +1,28 @@
 
 package com.benevol.service;
 
-import com.benevol.dto.caravane.CaravaneDto;
-import com.benevol.dto.caravane.CaravaneStatsDto;
-import com.benevol.dto.caravane.CreateCaravaneDto;
-import com.benevol.mapper.CaravaneMapper;
-import com.benevol.model.Caravane;
-import com.benevol.model.ParticipationCaravane;
-import com.benevol.model.StatutCaravane;
-import com.benevol.model.StatutParticipation;
-import com.benevol.repository.CaravaneRepository;
-import com.benevol.repository.ParticipationCaravaneRepository;
-import com.benevol.repository.AssociationRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import com.benevol.dto.caravane.CaravaneDto;
+import com.benevol.dto.caravane.CreateCaravaneDto;
+import com.benevol.mapper.CaravaneMapper;
+import com.benevol.model.Caravane;
+import com.benevol.model.ParticipationCaravane;
+import com.benevol.model.StatutCaravane;
+import com.benevol.model.StatutParticipation;
+import com.benevol.repository.AssociationRepository;
+import com.benevol.repository.CaravaneRepository;
+import com.benevol.repository.ParticipationCaravaneRepository;
 
 @Service
 @Transactional

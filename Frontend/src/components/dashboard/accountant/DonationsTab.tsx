@@ -283,12 +283,12 @@ const DonationsTab: React.FC<DonationsTabProps> = ({
               </Table>
             </div>
           )}
-          <div className="p-4 border-t bg-slate-50">
+          {/* <div className="p-4 border-t bg-slate-50">
             <Button variant="outline" className="w-full bg-white hover:bg-slate-100 border border-slate-200 shadow-sm">
               Voir tous les dons
               <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
-          </div>
+          </div> */}
         </CardContent>
       </Card>
     </div>

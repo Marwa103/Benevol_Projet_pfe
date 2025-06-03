@@ -20,9 +20,9 @@ interface PendingAssociation {
 
 interface DonationData {
   id: string;
-  amount: number;
-  date: string;
-  donorName: string;
+  montant: number;
+  dateCreation: string;
+  nomDonateur: string;
   status: string;
 }
 

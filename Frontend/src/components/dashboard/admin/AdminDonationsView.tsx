@@ -30,10 +30,10 @@ interface AdminDonationsViewProps {
 
 // Enhanced data for the chart with better aesthetics
 const donationData = [
-  { month: 'Jan', montant: 15000, color: '#8B5CF6' },
-  { month: 'Feb', montant: 22000, color: '#7E69AB' },
-  { month: 'Mar', montant: 38000, color: '#6366F1' },
-  { month: 'Apr', montant: 75000, color: '#4F46E5' },
+  { month: 'Jan', amount: 15000, color: '#8B5CF6' },
+  { month: 'Feb', amount: 22000, color: '#7E69AB' },
+  { month: 'Mar', amount: 38000, color: '#6366F1' },
+  { month: 'Apr', amount: 75000, color: '#4F46E5' },
 ];
 
 const colors = ['#8B5CF6', '#7E69AB', '#6366F1', '#4F46E5'];
@@ -48,7 +48,8 @@ const AdminDonationsView: React.FC<AdminDonationsViewProps> = ({ className }) =>
     refetchInterval: 60000
   });
 
-  const totalDonations = donations.reduce((sum, donation) => sum + donation.amount, 0);
+  console.log(donations);
+  const totalDonations = donations.reduce((sum, donation) => sum + donation.montant, 0);
 
   return (
     <Card className={className}>
@@ -75,7 +76,7 @@ const AdminDonationsView: React.FC<AdminDonationsViewProps> = ({ className }) =>
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-700">Total des dons</h3>
-                    <p className="text-2xl font-bold text-indigo-700">{totalDonations.toLocaleString('fr-FR')} MAD</p>
+                    <p className="text-2xl font-bold text-indigo-700">{totalDonations} MAD</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 md:justify-end">
@@ -98,7 +99,7 @@ const AdminDonationsView: React.FC<AdminDonationsViewProps> = ({ className }) =>
                 <ChartContainer 
                   className="h-[350px] w-full"
                   config={{
-                    montant: {
+                    amount: {
                       label: "Montant des dons",
                       color: "#8B5CF6"
                     }
@@ -150,7 +151,7 @@ const AdminDonationsView: React.FC<AdminDonationsViewProps> = ({ className }) =>
                       }}
                     />
                     <Bar 
-                      dataKey="montant" 
+                      dataKey="amount" 
                       name="Montant (MAD)" 
                       radius={[8, 8, 0, 0]}
                     >
@@ -195,10 +196,10 @@ const AdminDonationsView: React.FC<AdminDonationsViewProps> = ({ className }) =>
                     ) : (
                       donations.map(donation => (
                         <TableRow key={donation.id} className="hover:bg-gray-50">
-                          <TableCell>{formatDate(donation.date)}</TableCell>
-                          <TableCell className="font-medium">{donation.donorName}</TableCell>
+                          <TableCell>{formatDate(donation.dateCreation)}</TableCell>
+                          <TableCell className="font-medium">{donation.nomDonateur}</TableCell>
                           <TableCell className="font-semibold text-indigo-700">
-                            {donation.amount.toLocaleString('fr-FR')} MAD
+                            {donation.montant} MAD
                           </TableCell>
                           <TableCell>
                             <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
@@ -214,11 +215,11 @@ const AdminDonationsView: React.FC<AdminDonationsViewProps> = ({ className }) =>
                     )}
                   </TableBody>
                 </Table>
-                <div className="p-3 border-t bg-gray-50">
+                {/* <div className="p-3 border-t bg-gray-50">
                   <Button variant="ghost" size="sm" className="w-full hover:bg-gray-100">
                     Voir tous les dons <ChevronRight className="ml-1 h-4 w-4" />
                   </Button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -7,6 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 import { Plus } from 'lucide-react';
+import { CreateDonDto, DonDto } from '@/services/donationService';
+import { API_ENDPOINTS } from '@/utils/apiConfig';
+import apiService from '@/services/apiService';
 
 interface RegisterDonationFormProps {
   onDonationSubmit: (donation: {
@@ -20,13 +23,21 @@ interface RegisterDonationFormProps {
 const RegisterDonationForm: React.FC<RegisterDonationFormProps> = ({ onDonationSubmit }) => {
   const [donationType, setDonationType] = useState<'MONETARY' | 'MATERIAL'>('MONETARY');
   const [donorName, setDonorName] = useState('');
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState(0);
   const [items, setItems] = useState<{ name: string; quantity: number }[]>([]);
   const [newItemName, setNewItemName] = useState('');
   const [newItemQuantity, setNewItemQuantity] = useState('');
 
   const handleDonationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const donationData: CreateDonDto = {
+      nomDonateur: donorName,
+      montant: amount,
+      typeDon: 'MONETARY'
+    };
+
+    apiService.post<DonDto>(API_ENDPOINTS.DON.CREATE, donationData);
     
     if (!donorName) {
       toast({
@@ -64,7 +75,7 @@ const RegisterDonationForm: React.FC<RegisterDonationFormProps> = ({ onDonationS
 
     // Reset form
     setDonorName('');
-    setAmount('');
+    setAmount(0);
     setItems([]);
     setNewItemName('');
     setNewItemQuantity('');
@@ -135,7 +146,7 @@ const RegisterDonationForm: React.FC<RegisterDonationFormProps> = ({ onDonationS
                 type="number"
                 placeholder="Saisir le montant"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => setAmount(Number.parseInt(e.target.value))}
                 min="0"
               />
             </div>

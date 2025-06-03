@@ -44,11 +44,11 @@ const AccountantDashboard = () => {
       />
 
       {/* Statistics cards */}
-      <AccountantStats 
+      {/* <AccountantStats 
         stockStats={data.stockStats} 
         aidStats={data.aidStats} 
         donationStats={data.donationStats} 
-      />
+      /> */}
 
       {/* Donation evolution chart */}
       <Card className="border shadow-md">

@@ -20,7 +20,7 @@ export interface CreateDonDto {
 export interface DonDto {
   id: string;
   nomDonateur: string;
-  montant?: number;
+  amount?: number;
   typeDon: 'MONETARY' | 'MATERIAL';
   dateCreation: string;
   items?: DonItemDto[];

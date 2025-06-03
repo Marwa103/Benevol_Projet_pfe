@@ -13,10 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/evenement")
-@CrossOrigin(origins = "http://localhost:8080",
-        allowedHeaders = "*",
-        exposedHeaders = "Authorization",
-        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@CrossOrigin(origins = "*")
 public class EvenementController {
 
     @Autowired

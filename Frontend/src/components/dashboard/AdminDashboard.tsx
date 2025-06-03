@@ -77,7 +77,7 @@ const AdminDashboard = () => {
             Bienvenue, {user?.name}. Gérez les associations et les activités de la fédération.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <Button onClick={() => setShowNotifications(true)} className="bg-blue-500 hover:bg-blue-600">
             <Bell className="mr-2 h-4 w-4" />
             Notifications
@@ -85,14 +85,14 @@ const AdminDashboard = () => {
               2
             </span>
           </Button>
-        </div>
+        </div> */}
       </div>
 
       {/* Notifications */}
-      <AdminNotifications 
+      {/* <AdminNotifications 
         isOpen={showNotifications} 
         onOpenChange={setShowNotifications} 
-      />
+      /> */}
 
       {/* Navigation Buttons */}
       <AdminNavigation onTabChange={setActiveTab} />
