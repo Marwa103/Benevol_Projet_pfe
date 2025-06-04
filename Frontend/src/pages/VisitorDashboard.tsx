@@ -48,9 +48,9 @@ const VisitorDashboard = () => {
           <div className="md:col-span-2">
             <VisitorCaravansSection />
           </div>
-          <div className="md:col-span-3">
+          {/* <div className="md:col-span-3">
             <VisitorEventsSection />
-          </div>
+          </div> */}
         </div>
       </div>
     </MainLayout>

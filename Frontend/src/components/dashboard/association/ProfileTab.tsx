@@ -21,7 +21,7 @@ interface ProfileTabProps {
 const ProfileTab: React.FC<ProfileTabProps> = ({ myRequests, setShowAidRequestForm }) => {
   return (
     <div className="space-y-6">
-      <UserProfile editable={true} />
+      {/* <UserProfile editable={true} /> */}
 
       <Card>
         <CardHeader>

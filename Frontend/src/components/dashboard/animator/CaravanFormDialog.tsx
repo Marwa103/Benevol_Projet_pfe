@@ -251,7 +251,7 @@ const CaravanFormDialog: React.FC<CaravanFormDialogProps> = ({
               autoComplete="off"
             />
           </div>
-          <div className="grid gap-2">
+          {/* <div className="grid gap-2">
             <Label>Services médicaux</Label>
             <div className="flex gap-2">
               <Input
@@ -278,7 +278,7 @@ const CaravanFormDialog: React.FC<CaravanFormDialogProps> = ({
                 </Badge>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={handleClose}>Annuler</Button>

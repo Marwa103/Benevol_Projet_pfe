@@ -81,7 +81,7 @@ const CaravanDialog: React.FC<CaravanDialogProps> = ({ open, setOpen, caravan, o
             </div>
           </div>
           
-          <div>
+          {/* <div>
             <p className="text-sm font-medium mb-1">Services médicaux</p>
             <div className="flex flex-wrap gap-1">
               {caravan.services.map((service, i) => (
@@ -90,7 +90,7 @@ const CaravanDialog: React.FC<CaravanDialogProps> = ({ open, setOpen, caravan, o
                 </Badge>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
         <DialogFooter>
           <Button 

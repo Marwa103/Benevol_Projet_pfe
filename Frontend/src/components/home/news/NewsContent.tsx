@@ -1,10 +1,13 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TabsContent } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import NewsCard from './NewsCard';
 import { CategoryType } from './categoryUtils';
 import { newsItems } from './newsData';
+import associationService from '@/services/associationService';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AspectRatio } from '@radix-ui/react-aspect-ratio';
 
 interface NewsContentProps {
   activeCategory: CategoryType;
@@ -15,6 +18,19 @@ const NewsContent: React.FC<NewsContentProps> = ({ activeCategory }) => {
   const filteredNewsItems = activeCategory === 'Toutes' 
     ? newsItems 
     : newsItems.filter(item => item.category === activeCategory);
+
+  const [ aidRequests, setAidRequests ] = useState({})
+    const getData = async (): Promise<void> => {
+      await associationService.getAllAssociations()
+      .then(response => {
+        console.log(response);
+        setAidRequests(response);
+      })
+    }
+    useEffect(() => {
+      getData()
+  },[]);
+  
   
   return (
     <TabsContent value={activeCategory} className="mt-2">

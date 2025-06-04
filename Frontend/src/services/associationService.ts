@@ -31,6 +31,15 @@ class AssociationService {
     }
   }
 
+   async createAssociationAidRequest(data: CreateAidRequestDto): Promise<AidRequestDto> {
+    try {
+      return await apiService.post<AidRequestDto>(API_ENDPOINTS.ASSOCIATION.CREATE, data);
+    } catch (error) {
+      console.error('Error creating aid request:', error);
+      throw error;
+    }
+  }
+
   async getMyAidRequests(): Promise<AidRequestDto[]> {
     try {
       return await apiService.get<AidRequestDto[]>(API_ENDPOINTS.AID_REQUEST.MY_REQUESTS);

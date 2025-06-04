@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
@@ -28,6 +28,7 @@ import {
   Area,
   AreaChart
 } from 'recharts';
+import donService from '@/services/donationService';
 
 interface Donation {
   id: string;
@@ -59,6 +60,19 @@ const DonationsTab: React.FC<DonationsTabProps> = ({
   isLoading,
   totalMonetary
 }) => {
+
+  const [ dons, setDons ] = useState({})
+    const getData = async (): Promise<void> => {
+      await donService.getDonHistory()
+      .then(response => {
+        console.log(response);
+        setDons(response);
+      })
+    }
+    useEffect(() => {
+      getData()
+  },[]);
+
   return (
     <div className="space-y-6">
       {/* Header Cards with improved aesthetics */}
@@ -250,7 +264,7 @@ const DonationsTab: React.FC<DonationsTabProps> = ({
                       </TableCell>
                     </TableRow>
                   ) : (
-                    donations.map(donation => (
+                    Object.values(dons).map((donation: any) => (
                       <TableRow key={donation.id} className="hover:bg-gray-50 border-b last:border-0">
                         <TableCell className="font-medium text-slate-800">{donation.donorName}</TableCell>
                         <TableCell className="text-slate-600">{donation.date}</TableCell>

@@ -1,7 +1,8 @@
+import { API_BASE_URL } from '@/utils/apiConfig';
 import apiService from './apiService';
 import { Publication } from '@/utils/types';
 
-const BASE_URL = '/publication';
+const BASE_URL = `${API_BASE_URL}/publication`;
 
 export const getAllPublications = async (): Promise<Publication[]> => {
   return await apiService.get(`${BASE_URL}/all`);

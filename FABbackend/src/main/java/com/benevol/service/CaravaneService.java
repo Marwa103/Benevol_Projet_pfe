@@ -55,10 +55,9 @@ public class CaravaneService {
 
     public CaravaneDto createCaravane(CreateCaravaneDto createDto) {
         Caravane caravane = caravaneMapper.toEntity(createDto);
-        caravane.setId(UUID.randomUUID().toString());
-        caravane.setStatut(StatutCaravane.PLANNED);
-        caravane.setDateCreation(LocalDateTime.now());
-
+//        caravane.setId(UUID.randomUUID().toString());
+//        caravane.setStatut(StatutCaravane.PLANNED);
+//        caravane.setDateCreation(LocalDateTime.now());
         Caravane savedCaravane = caravaneRepository.save(caravane);
         return caravaneMapper.toDto(savedCaravane);
     }

@@ -17,7 +17,7 @@ public class CaravaneDto {
     private LocalDateTime dateFin;
     private String organisateur;
     private StatutCaravane statut;
-    private List<String> servicesOfferts;
+//    private List<String> servicesOfferts;
     private int nombreParticipants;
     private LocalDateTime dateCreation;
     private LocalDateTime dateModification;
@@ -56,8 +56,8 @@ public class CaravaneDto {
     public StatutCaravane getStatut() { return statut; }
     public void setStatut(StatutCaravane statut) { this.statut = statut; }
 
-    public List<String> getServicesOfferts() { return servicesOfferts; }
-    public void setServicesOfferts(List<String> servicesOfferts) { this.servicesOfferts = servicesOfferts; }
+//    public List<String> getServicesOfferts() { return servicesOfferts; }
+//    public void setServicesOfferts(List<String> servicesOfferts) { this.servicesOfferts = servicesOfferts; }
 
     public int getNombreParticipants() { return nombreParticipants; }
     public void setNombreParticipants(int nombreParticipants) { this.nombreParticipants = nombreParticipants; }

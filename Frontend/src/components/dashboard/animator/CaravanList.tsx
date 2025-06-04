@@ -42,7 +42,7 @@ const CaravanList: React.FC<CaravanListProps> = ({ caravans, onEdit, onDelete })
                 <Users className="h-4 w-4 text-muted-foreground" />
                 <span>{caravan.associations} associations participantes</span>
               </div>
-              <div>
+              {/* <div>
                 <span className="text-sm font-medium">Services médicaux:</span>
                 <div className="flex flex-wrap gap-1 mt-1">
                   {caravan.services.map((service, index) => (
@@ -51,7 +51,7 @@ const CaravanList: React.FC<CaravanListProps> = ({ caravans, onEdit, onDelete })
                     </Badge>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
           </CardContent>
           <CardFooter className="flex justify-end gap-2 border-t pt-4">

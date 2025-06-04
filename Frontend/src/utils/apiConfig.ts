@@ -56,6 +56,7 @@ export const API_ENDPOINTS = {
   // Association endpoints
   ASSOCIATION: {
     ALL: `${API_BASE_URL}/association/all`,
+    CREATE: `${API_BASE_URL}/association/aid-request`,
     DETAIL: (id: string) => `${API_BASE_URL}/association/${id}`,
   },
   // Stock endpoints

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -14,6 +14,8 @@ import { Calendar, MapPin, Car, Heart, LogIn } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import caravaneService from '@/services/caravaneService';
+import { formatDate } from '@/utils/dateFormat';
 
 const VisitorCaravansSection = () => {
   const { isAuthenticated } = useAuth();
@@ -38,6 +40,18 @@ const VisitorCaravansSection = () => {
     });
   };
 
+  const [ caravanes, setCaravanes ] = useState({})
+    const getData = async (): Promise<void> => {
+      await caravaneService.getAllCaravanes()
+      .then(response => {
+        console.log(response);
+        setCaravanes(response);
+      })
+    }
+    useEffect(() => {
+      getData()
+  },[]);
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -48,24 +62,24 @@ const VisitorCaravansSection = () => {
       </CardHeader>
       <CardContent>
         <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {caravans.map((caravan) => (
+          {Object.values(caravanes).map((caravan: any) => (
             <Card key={caravan.id} className="overflow-hidden">
               <div className="p-4">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-bold text-lg">{caravan.name}</h3>
-                  <Badge variant={caravan.status === 'active' ? 'default' : 'outline'}>
-                    {caravan.status === 'active' ? 'En cours' : 'Planifiée'}
+                  <h3 className="font-bold text-lg">{caravan.titre}</h3>
+                  <Badge variant={caravan.statut === 'active' ? 'default' : 'outline'}>
+                    {caravan.statut === 'active' ? 'En cours' : 'Planifiée'}
                   </Badge>
                 </div>
                 
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1" />
-                    {caravan.location}
+                    {caravan.adresse}
                   </div>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <Calendar className="h-4 w-4 mr-1" />
-                    {caravan.date}
+                    {formatDate(caravan.dateCreation)}
                   </div>
                 </div>
                 
@@ -73,11 +87,11 @@ const VisitorCaravansSection = () => {
                   <p className="text-sm text-gray-600 line-clamp-2">{caravan.description}</p>
                 </div>
                 
-                <div className="flex flex-wrap gap-1 mb-4">
+                {/* <div className="flex flex-wrap gap-1 mb-4">
                   {caravan.services.map((service, index) => (
                     <Badge key={index} variant="secondary">{service}</Badge>
                   ))}
-                </div>
+                </div> */}
                 
                 <Button 
                   className="w-full" 

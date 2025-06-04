@@ -34,7 +34,7 @@ public class CreateCaravaneDto {
     @Size(min = 2, max = 200, message = "Le nom de l'organisateur doit contenir entre 2 et 200 caractères")
     private String organisateur;
 
-    private List<String> servicesOfferts;
+//    private List<String> servicesOfferts;
 
     // Constructeurs
     public CreateCaravaneDto() {}
@@ -64,6 +64,6 @@ public class CreateCaravaneDto {
     public String getOrganisateur() { return organisateur; }
     public void setOrganisateur(String organisateur) { this.organisateur = organisateur; }
 
-    public List<String> getServicesOfferts() { return servicesOfferts; }
-    public void setServicesOfferts(List<String> servicesOfferts) { this.servicesOfferts = servicesOfferts; }
+//    public List<String> getServicesOfferts() { return servicesOfferts; }
+//    public void setServicesOfferts(List<String> servicesOfferts) { this.servicesOfferts = servicesOfferts; }
 }
