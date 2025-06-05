@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { UseMutationResult } from '@tanstack/react-query';
 import { 
   Table, 
@@ -12,6 +12,7 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { UserCheck } from 'lucide-react';
+import associationService from '@/services/associationService';
 
 interface Association {
   id: string;
@@ -34,7 +35,20 @@ const AdminPendingAssociations = ({
   verifyMutation, 
   onVerify 
 }: AdminPendingAssociationsProps) => {
+
+  const [ aides, setAides ] = useState({})
+    const getData = async (): Promise<void> => {
+      await associationService.getAllAssociations()
+      .then(response => {
+        setAides(response);
+      })
+    }
+    useEffect(() => {
+      getData()
+  },[]);
+
   return (
+    
     <Card>
       <CardHeader>
         <CardTitle className="text-xl">Demandes d'intégration</CardTitle>
@@ -47,7 +61,7 @@ const AdminPendingAssociations = ({
           <div className="flex justify-center py-8">
             <p className="text-muted-foreground">Chargement des associations...</p>
           </div>
-        ) : associations && associations.length > 0 ? (
+        ) : Object.values(aides).length > 0 ? (
           <Table>
             <TableHeader>
               <TableRow>
@@ -59,7 +73,7 @@ const AdminPendingAssociations = ({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {associations.map((association) => (
+              {Object.values(aides).map((association: any) => (
                 <TableRow key={association.id}>
                   <TableCell className="font-medium">{association.name}</TableCell>
                   <TableCell>{association.email}</TableCell>
