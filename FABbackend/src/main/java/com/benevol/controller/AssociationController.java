@@ -5,6 +5,7 @@ import com.benevol.dto.association.AssociationDto;
 import com.benevol.dto.association.AssociationResponseDto;
 import com.benevol.dto.association.AidRequestDto;
 import com.benevol.dto.association.CreateAidRequestDto;
+import com.benevol.model.Association;
 import com.benevol.service.AssociationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,6 @@ public class AssociationController {
     }
     
     @GetMapping("/approved")
-    @PreAuthorize("hasRole('ACCOUNTANT') or hasRole('ADMIN')")
     public ResponseEntity<List<AssociationResponseDto>> getAllAssociations() {
         List<AssociationDto> associations = associationService.getAllApprovedAssociations();
         List<AssociationResponseDto> responseList = associations.stream()
@@ -86,9 +86,8 @@ public class AssociationController {
     }
     
     @PutMapping("/approuver/{id}")
-    @PreAuthorize("hasRole('ACCOUNTANT') or hasRole('ADMIN')")
-    public ResponseEntity<Void> approuverDemande(@PathVariable String id) {
-        associationService.approuverDemande(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Association> approuverDemande(@PathVariable String id) {
+    	Association association = associationService.approuverDemande(id);
+        return ResponseEntity.ok(association);
     }
 }

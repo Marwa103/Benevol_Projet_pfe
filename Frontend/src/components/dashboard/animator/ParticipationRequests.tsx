@@ -46,7 +46,7 @@ const ParticipationRequests: React.FC<ParticipationRequestsProps> = ({
   },[]);
 
   const updateAssociationMutation = useMutation({
-    mutationFn: (id: string ) => {
+    mutationFn: ( id: string ) => {
       console.log('ID association:', JSON.stringify(id));
       return associationService.approvedAssociation(id);
     },
@@ -55,6 +55,9 @@ const ParticipationRequests: React.FC<ParticipationRequestsProps> = ({
         title: "Association validée avec succès",
         description: "L'association a été mis à jour avec succès dans la base de données",
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     },
     onError: (error) => {
       toast({
@@ -92,7 +95,12 @@ const ParticipationRequests: React.FC<ParticipationRequestsProps> = ({
                   size="sm" 
                   variant="outline"
                   className="flex items-center"
-                  onClick={() => updateAssociationMutation.mutate(association.id)}
+                  onClick={() => {
+                     if (!association.isApproved) {
+                        updateAssociationMutation.mutate(association.id);
+                      }
+                  }}
+                  disabled={ association.isApproved == true }
                 >
                   <X className="h-4 w-4 mr-1" />
                   Refuser
@@ -100,10 +108,15 @@ const ParticipationRequests: React.FC<ParticipationRequestsProps> = ({
                 <Button 
                   size="sm"
                   className="flex items-center"
-                  onClick={() => updateAssociationMutation.mutate(association.id)}
+                  onClick={() => {
+                     if (!association.isApproved) {
+                        updateAssociationMutation.mutate(association.id);
+                      }
+                  }}
+                  disabled={ association.isApproved == true }
                 >
                   <Check className="h-4 w-4 mr-1" />
-                  Approuver
+                  { association.isApproved == true ? 'Déjà approuvé' : 'Approuver' }
                 </Button>
               </div>
             </div>

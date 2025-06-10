@@ -15,6 +15,7 @@ import { UserCheck } from 'lucide-react';
 import associationService from '@/services/associationService';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
+import { useApprovedAssociation } from '@/hooks/useAssociations';
 
 interface Association {
   id: string;
@@ -51,7 +52,7 @@ const AdminPendingAssociations = ({
   },[]);
 
   const updateAssociationMutation = useMutation({
-    mutationFn: (id: string ) => {
+    mutationFn: ( id: string ) => {
       console.log('ID association:', JSON.stringify(id));
       return associationService.approvedAssociation(id);
     },
@@ -60,6 +61,9 @@ const AdminPendingAssociations = ({
         title: "Association validée avec succès",
         description: "L'association a été mis à jour avec succès dans la base de données",
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     },
     onError: (error) => {
       toast({

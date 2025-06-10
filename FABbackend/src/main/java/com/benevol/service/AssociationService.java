@@ -240,17 +240,16 @@ public class AssociationService {
         return dto;
     }
     
-    public void approuverDemande(String id) {
-        Association association = associationRepository.findById(id)
-        		.orElseThrow(() -> new RuntimeException("Demande non trouvée"));
+    public Association approuverDemande(String id) {
+        Association association = associationRepository.findById(id).get();
         association.setIsApproved(true);
-        associationRepository.save(association);
-        envoyerMailConfirmation(association);
+        //envoyerMailConfirmation(association);
+        return associationRepository.save(association);
     }
 
     private void envoyerMailConfirmation(Association association) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("no-reply@morocco-test.org");
+        message.setTo("no-reply@benevol.com");
         message.setSubject("Demande Approuvée");
         message.setText("Votre demande avec le nom " + association.getNom() + " a été approuvée.");
         mailSender.send(message);

@@ -76,14 +76,15 @@ class AssociationService {
     }
   }
 
-  async approvedAssociation(id: string): Promise<AidRequestDto> {
-    try {
-      return await apiService.put<AidRequestDto>(API_ENDPOINTS.ASSOCIATION.APPROVER(id), {});
-    } catch (error) {
-      console.error('Error rejecting aid request:', error);
-      throw error;
-    }
+  async approvedAssociation(id: string): Promise<AidRequestDto | void> {
+  try {
+    const response :any = await apiService.put(API_ENDPOINTS.ASSOCIATION.APPROVER(id), {});
+    return response.data || {}; // ou `undefined` selon le contrat
+  } catch (error) {
+    console.error('Error approving aid request:', error);
+    throw error;
   }
+}
 }
 
 export const associationService = new AssociationService();
