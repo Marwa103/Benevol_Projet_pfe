@@ -1,4 +1,3 @@
-
 package com.benevol.service;
 
 import com.benevol.dto.association.AssociationDto;
@@ -13,7 +12,8 @@ import com.benevol.model.AidRequestStatus;
 import com.benevol.repository.AssociationRepository;
 import com.benevol.repository.UserRepository;
 import com.benevol.repository.AidRequestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,19 +27,21 @@ import java.util.stream.Collectors;
 @Transactional
 public class AssociationService {
 
-    @Autowired
-    private AssociationRepository associationRepository;
+    private final AssociationRepository associationRepository;
+    private final UserRepository userRepository;
+    private final AidRequestRepository aidRequestRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JavaMailSender mailSender;
 
-    @Autowired
-    private UserRepository userRepository;
+    public AssociationService(AssociationRepository associationRepository, UserRepository userRepository, AidRequestRepository aidRequestRepository, PasswordEncoder passwordEncoder, JavaMailSender mailSender) {
+		this.associationRepository = associationRepository;
+		this.userRepository = userRepository;
+		this.aidRequestRepository = aidRequestRepository;
+		this.passwordEncoder = passwordEncoder;
+		this.mailSender = mailSender;
+	}
 
-    @Autowired
-    private AidRequestRepository aidRequestRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public List<AssociationDto> getAllAssociations() {
+	public List<AssociationDto> getAllAssociations() {
         List<Association> associations = associationRepository.findAll();
         return associations.stream()
             .map(this::convertToDto)
@@ -236,5 +238,21 @@ public class AssociationService {
         // Ces champs devront peut-être être remplis autrement
         
         return dto;
+    }
+    
+    public void approuverDemande(String id) {
+        Association association = associationRepository.findById(id)
+        		.orElseThrow(() -> new RuntimeException("Demande non trouvée"));
+        association.setIsApproved(true);
+        associationRepository.save(association);
+        envoyerMailConfirmation(association);
+    }
+
+    private void envoyerMailConfirmation(Association association) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("no-reply@morocco-test.org");
+        message.setSubject("Demande Approuvée");
+        message.setText("Votre demande avec le nom " + association.getNom() + " a été approuvée.");
+        mailSender.send(message);
     }
 }

@@ -56,13 +56,13 @@ const AnimatorDashboard = () => {
         </TabsContent>
 
         {/* Adding Notifications Tab */}
-        <TabsContent value="notifications">
+        {/* <TabsContent value="notifications">
           <NotificationsTab />
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
 
       {/* Floating notification button */}
-      <div className="fixed bottom-4 right-4">
+      {/* <div className="fixed bottom-4 right-4">
         <Button
           variant="outline"
           size="icon"
@@ -72,7 +72,7 @@ const AnimatorDashboard = () => {
           <Bell className="h-6 w-6" />
           <span className="absolute -top-1 -right-1 bg-red-500 text-white w-5 h-5 rounded-full text-xs flex items-center justify-center">4</span>
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };

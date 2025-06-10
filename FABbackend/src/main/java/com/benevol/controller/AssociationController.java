@@ -22,10 +22,10 @@ public class AssociationController {
 
     @Autowired
     private AssociationService associationService;
-
+    
     @GetMapping("/all")
-    public ResponseEntity<List<AssociationResponseDto>> getAllAssociations() {
-        List<AssociationDto> associations = associationService.getAllApprovedAssociations();
+    public ResponseEntity<List<AssociationResponseDto>> getAssociations() {
+        List<AssociationDto> associations = associationService.getAllAssociations();
         List<AssociationResponseDto> responseList = associations.stream()
             .map(AssociationResponseDto::new)
             .collect(Collectors.toList());
@@ -73,5 +73,22 @@ public class AssociationController {
     public ResponseEntity<AidRequestDto> rejectAidRequest(@PathVariable String id) {
         AidRequestDto aidRequest = associationService.rejectAidRequest(id);
         return ResponseEntity.ok(aidRequest);
+    }
+    
+    @GetMapping("/approved")
+    @PreAuthorize("hasRole('ACCOUNTANT') or hasRole('ADMIN')")
+    public ResponseEntity<List<AssociationResponseDto>> getAllAssociations() {
+        List<AssociationDto> associations = associationService.getAllApprovedAssociations();
+        List<AssociationResponseDto> responseList = associations.stream()
+            .map(AssociationResponseDto::new)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(responseList);
+    }
+    
+    @PutMapping("/approuver/{id}")
+    @PreAuthorize("hasRole('ACCOUNTANT') or hasRole('ADMIN')")
+    public ResponseEntity<Void> approuverDemande(@PathVariable String id) {
+        associationService.approuverDemande(id);
+        return ResponseEntity.ok().build();
     }
 }

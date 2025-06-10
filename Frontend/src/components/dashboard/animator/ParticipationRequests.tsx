@@ -1,10 +1,13 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Check, X } from 'lucide-react';
 import { format } from 'date-fns';
+import associationService from '@/services/associationService';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from '@/hooks/use-toast';
 
 interface ParticipationRequest {
   id: string;
@@ -30,6 +33,39 @@ const ParticipationRequests: React.FC<ParticipationRequestsProps> = ({
   const pendingRequests = participationRequests.filter(req => req.status === 'PENDING');
   const processedRequests = participationRequests.filter(req => req.status !== 'PENDING');
 
+  const [ associations, setAssociations ] = useState({})
+  const getData = async (): Promise<void> => {
+    await associationService.getAllAssociations()
+    .then(response => {
+      setAssociations(response);
+      console.log(response);
+    })
+  }
+  useEffect(() => {
+    getData()
+  },[]);
+
+  const updateAssociationMutation = useMutation({
+    mutationFn: (id: string ) => {
+      console.log('ID association:', JSON.stringify(id));
+      return associationService.approvedAssociation(id);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Association validée avec succès",
+        description: "L'association a été mis à jour avec succès dans la base de données",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de la mise à jour!",
+        variant: "destructive",
+      });
+      console.error('Association error:', error);
+    }
+  });
+
   return (
     <Card>
       <CardHeader>
@@ -39,16 +75,16 @@ const ParticipationRequests: React.FC<ParticipationRequestsProps> = ({
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {pendingRequests.map((request) => (
-          <div key={request.id} className="border rounded-lg p-4">
+        {Object.values(associations).map((association: any) => (
+          <div key={association.id} className="border rounded-lg p-4">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-medium">{request.associationName}</h3>
+                <h3 className="font-medium">{association.description}</h3>
                 <p className="text-sm text-muted-foreground">
-                  Pour: {request.caravanName}
+                  Pour: {association.name}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  Demande du {format(request.requestDate, 'dd/MM/yyyy')}
+                  Demande du {format(association.registrationDate, 'dd/MM/yyyy')}
                 </p>
               </div>
               <div className="flex gap-2">
@@ -56,7 +92,7 @@ const ParticipationRequests: React.FC<ParticipationRequestsProps> = ({
                   size="sm" 
                   variant="outline"
                   className="flex items-center"
-                  onClick={() => onReject(request.id)}
+                  onClick={() => updateAssociationMutation.mutate(association.id)}
                 >
                   <X className="h-4 w-4 mr-1" />
                   Refuser
@@ -64,7 +100,7 @@ const ParticipationRequests: React.FC<ParticipationRequestsProps> = ({
                 <Button 
                   size="sm"
                   className="flex items-center"
-                  onClick={() => onApprove(request.id)}
+                  onClick={() => updateAssociationMutation.mutate(association.id)}
                 >
                   <Check className="h-4 w-4 mr-1" />
                   Approuver

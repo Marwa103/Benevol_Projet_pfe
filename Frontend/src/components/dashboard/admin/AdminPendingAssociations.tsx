@@ -13,6 +13,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { UserCheck } from 'lucide-react';
 import associationService from '@/services/associationService';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from '@/hooks/use-toast';
 
 interface Association {
   id: string;
@@ -41,11 +43,33 @@ const AdminPendingAssociations = ({
       await associationService.getAllAssociations()
       .then(response => {
         setAides(response);
+        console.log(response);
       })
     }
     useEffect(() => {
       getData()
   },[]);
+
+  const updateAssociationMutation = useMutation({
+    mutationFn: (id: string ) => {
+      console.log('ID association:', JSON.stringify(id));
+      return associationService.approvedAssociation(id);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Association validée avec succès",
+        description: "L'association a été mis à jour avec succès dans la base de données",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de la mise à jour!",
+        variant: "destructive",
+      });
+      console.error('Association error:', error);
+    }
+  });
 
   return (
     
@@ -84,12 +108,11 @@ const AdminPendingAssociations = ({
                   <TableCell className="text-right">
                     <Button 
                       size="sm" 
-                      onClick={() => onVerify(association.id)}
-                      disabled={verifyMutation.isPending && verifyMutation.variables === association.id}
+                      onClick={() => updateAssociationMutation.mutate(association.id)}
+                      disabled={ association.isApproved == true }
                     >
                       <UserCheck className="mr-2 h-4 w-4" />
-                      {verifyMutation.isPending && verifyMutation.variables === association.id ? 
-                        'Vérification...' : 'Vérifier la crédibilité'}
+                      { association.isApproved == true ? 'Association apprové' : 'Vérifier la crédibilité' }
                     </Button>
                   </TableCell>
                 </TableRow>

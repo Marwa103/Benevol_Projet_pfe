@@ -58,6 +58,8 @@ export const API_ENDPOINTS = {
     ALL: `${API_BASE_URL}/association/all`,
     CREATE: `${API_BASE_URL}/association/aid-request`,
     DETAIL: (id: string) => `${API_BASE_URL}/association/${id}`,
+    APPROVED: `${API_BASE_URL}/association/approved`,
+    APPROVER: (id: string) => `${API_BASE_URL}/association/approuver/${id}`,
   },
   // Stock endpoints
   STOCK: {

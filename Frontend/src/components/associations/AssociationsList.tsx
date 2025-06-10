@@ -112,6 +112,7 @@ const AssociationsList = () => {
     await associationService.getAllAssociations()
     .then(response => {
       setAssociations(response);
+      console.log(response);
     })
   }
   useEffect(() => {

@@ -65,3 +65,12 @@ export const useRejectAidRequest = () => {
     },
   });
 };
+
+export const useApprovedAssociation = () => {
+  return useMutation({
+    mutationFn: (id: string) => associationService.approvedAssociation(id),
+    onSuccess: () => {
+      console.log("La mise à jour à bien été faite.")
+    },
+  });
+};
